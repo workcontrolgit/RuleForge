@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{4BAEC2EB-6DA7-484B-BECE-B79AA511BB87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleForge.WebApi", "RuleForge.WebApi\RuleForge.WebApi.csproj", "{5F3E48B4-629D-4E20-867E-2CCB130F782A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2AB8F82D-8CEC-4618-978B-1F8D6AA19923} = {2AB8F82D-8CEC-4618-978B-1F8D6AA19923}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1C8139E3-1217-433C-A9D8-E7EDC019A7EF}"
 EndProject
@@ -18,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleForge.Infrastructure.Persistence", "RuleForge.Infrastructure.Persistence\RuleForge.Infrastructure.Persistence.csproj", "{C4D3E49A-6AEC-4668-BDBA-5068CE672AF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleForge.Infrastructure.Shared", "RuleForge.Infrastructure.Shared\RuleForge.Infrastructure.Shared.csproj", "{CA602549-B6E1-4CF3-B8A8-03E9A5A0A438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleForge.Infrastructure.RuleEngine", "RuleForge.Infrastructure.RuleEngine\RuleForge.Infrastructure.RuleEngine.csproj", "{2AB8F82D-8CEC-4618-978B-1F8D6AA19923}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +50,10 @@ Global
 		{CA602549-B6E1-4CF3-B8A8-03E9A5A0A438}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA602549-B6E1-4CF3-B8A8-03E9A5A0A438}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA602549-B6E1-4CF3-B8A8-03E9A5A0A438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AB8F82D-8CEC-4618-978B-1F8D6AA19923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AB8F82D-8CEC-4618-978B-1F8D6AA19923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AB8F82D-8CEC-4618-978B-1F8D6AA19923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AB8F82D-8CEC-4618-978B-1F8D6AA19923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,5 +64,6 @@ Global
 		{EAE7B61A-EFB1-4E95-B628-9068B7F84F7C} = {1C8139E3-1217-433C-A9D8-E7EDC019A7EF}
 		{C4D3E49A-6AEC-4668-BDBA-5068CE672AF5} = {12921A13-E80F-4BD6-B7A1-EB5918056F7C}
 		{CA602549-B6E1-4CF3-B8A8-03E9A5A0A438} = {12921A13-E80F-4BD6-B7A1-EB5918056F7C}
+		{2AB8F82D-8CEC-4618-978B-1F8D6AA19923} = {12921A13-E80F-4BD6-B7A1-EB5918056F7C}
 	EndGlobalSection
 EndGlobal

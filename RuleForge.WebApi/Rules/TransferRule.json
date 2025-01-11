@@ -1,0 +1,23 @@
+[
+  {
+    "WorkflowName": "Transfer",
+    "Rules": [
+      {
+        "RuleName": "BalanceControl",
+        "SuccessEvent": "10",
+        "ErrorMessage": "You do not have sufficient funds for this transaction.",
+        "ErrorType": "Error",
+        "RuleExpressionType": "LambdaExpression",
+        "Expression": "input1.Balance >= input2.Amount"
+      },
+      {
+        "RuleName": "UnderZero",
+        "SuccessEvent": "10",
+        "ErrorMessage": "The balance must be a valid number.",
+        "ErrorType": "Error",
+        "RuleExpressionType": "LambdaExpression",
+        "Expression": "CustomMethods.UnderOrEqualsZero(input2.Amount) == false"
+      }
+    ]
+  }
+]

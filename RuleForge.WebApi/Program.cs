@@ -1,4 +1,6 @@
 // Set up a try block to handle any exceptions during startup
+using RuleForge.Infrastructure.RuleEngine;
+
 try
 {
     // Create a WebApplication builder with command-line arguments
@@ -34,6 +36,9 @@ try
     builder.Services.AddMvcCore().AddApiExplorer();
     // Add versioned API explorer extension
     builder.Services.AddVersionedApiExplorerExtension();
+    // Add Rule Engine
+    builder.Services.AddRuleSystem();
+
     // Build the application
     var app = builder.Build();
     // Log information about middleware registration

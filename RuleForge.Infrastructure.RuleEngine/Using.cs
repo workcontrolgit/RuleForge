@@ -1,0 +1,9 @@
+﻿global using Microsoft.Extensions.DependencyInjection;
+global using RulesEngine.Interfaces;
+global using RulesEngine.Models;
+global using RuleForge.Infrastructure.RuleEngine.RuleModule.CustomMethods;
+global using RuleForge.Infrastructure.RuleEngine.RuleModule.Helpers;
+global using RuleForge.Infrastructure.RuleEngine.RuleModule.Services;
+global using System.Collections.Generic;
+global using Newtonsoft.Json;
+global using System.IO;
