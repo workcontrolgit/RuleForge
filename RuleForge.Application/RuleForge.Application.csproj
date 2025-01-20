@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RuleForge.Domain\RuleForge.Domain.csproj" />
+    <ProjectReference Include="..\RuleForge.Infrastructure.RuleEngine\RuleForge.Infrastructure.RuleEngine.csproj" />
   </ItemGroup>
 
 </Project>

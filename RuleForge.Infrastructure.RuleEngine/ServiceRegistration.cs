@@ -1,4 +1,6 @@
-﻿namespace RuleForge.Infrastructure.RuleEngine
+﻿using RulesEngine;
+
+namespace RuleForge.Infrastructure.RuleEngine
 {
     public static class ServiceRegistration
     {

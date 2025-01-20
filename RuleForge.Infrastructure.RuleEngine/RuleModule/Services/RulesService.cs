@@ -1,6 +1,4 @@
-﻿using RulesEngine.Interfaces;
-using RulesEngine.Models;
-using RuleForge.Infrastructure.RuleEngine.RuleModule.Models;
+﻿using RuleForge.Infrastructure.RuleEngine.RuleModule.Models;
 
 namespace RuleForge.Infrastructure.RuleEngine.RuleModule.Services
 {
@@ -14,6 +12,39 @@ namespace RuleForge.Infrastructure.RuleEngine.RuleModule.Services
 
             return HandleResult(resultList);
         }
+
+        /// <summary>
+        /// Execute Workflow All Success
+        /// </summary>
+        /// <param name="workflowName">Workflow Name</param>
+        /// <param name="inputs">Inputs</param>
+        /// <returns>True if Any Pass, False if None Pass</returns>
+        //public async ValueTask<bool> ExecuteWorkflowAllSuccess(string workflowName, params object[] inputs) =>
+        //     (await ExecuteWorkflowAsync(workflowName, inputs)).All(a => a.IsSuccess);
+
+        public async ValueTask<bool> ExecuteWorkflowAllSuccess(string workflowName, params object[] inputs)
+        {
+            List<RuleResultTree> resultList = await ExecuteWorkflowAsync(workflowName, inputs);
+            return resultList.All(a => a.IsSuccess);
+        }
+
+        /// <summary>
+        /// Execute Workflow Any Success
+        /// </summary>
+        /// <param name="workflowName">Workflow Name</param>
+        /// <param name="inputs">Inputs</param>
+        /// <returns>True if Any Pass, False if None Pass</returns>
+        public async ValueTask<bool> ExecuteWorkflowAnySuccess(string workflowName, params object[] inputs) =>
+             (await ExecuteWorkflowAsync(workflowName, inputs)).Any(a => a.IsSuccess);
+
+        /// <summary>
+        /// Execute Workflow
+        /// </summary>
+        /// <param name="workflowName">Workflow Name</param>
+        /// <param name="inputs">Inputs</param>
+        /// <returns>List of Rule Result Tree</returns>
+        private ValueTask<List<RuleResultTree>> ExecuteWorkflowAsync(string workflowName, params object[] inputs) =>
+            _rulesEngine.ExecuteAllRulesAsync(workflowName, inputs);
 
         private static RuleCheckModel HandleResult(List<RuleResultTree> resultList)
         {

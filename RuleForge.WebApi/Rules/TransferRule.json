@@ -19,5 +19,50 @@
         "Expression": "CustomMethods.UnderOrEqualsZero(input2.Amount) == false"
       }
     ]
+  },
+  {
+    "WorkflowName": "PositionWorkflow",
+    "Rules": [
+      {
+        "RuleName": "Apply10PercentDiscount",
+        "SuccessEvent": "10% Discount Applied",
+        "ErrorMessage": "No discount applicable",
+        "Expression": "input1.TotalAmount > 100"
+      },
+      {
+        "RuleName": "Apply20PercentDiscount",
+        "SuccessEvent": "20% Discount Applied",
+        "ErrorMessage": "No discount applicable",
+        "Expression": "input2 == \"PositionWorkflow\""
+      }
+    ]
+  },
+  {
+    "WorkflowName": "PositionWorkflow2",
+    "Rules": [
+      {
+        "RuleName": "Apply10PercentDiscount2",
+        "SuccessEvent": "10% Discount Applied",
+        "ErrorMessage": "No discount applicable",
+        "Expression": "basicInfo.TotalAmount > 100"
+      },
+      {
+        "RuleName": "Apply20PercentDiscount2",
+        "SuccessEvent": "20% Discount Applied",
+        "ErrorMessage": "No discount applicable",
+        "Expression": "orderInfo == \"PositionWorkflow\""
+      }
+    ]
+  },
+  {
+    "WorkflowName": "RuleParameterWorkflow",
+    "Rules": [
+      {
+        "RuleName": "Apply10PercentDiscount",
+        "SuccessEvent": "10% Discount Applied",
+        "ErrorMessage": "No discount applicable",
+        "Expression": "positionInfo.TotalAmount > 100"
+      }
+    ]
   }
 ]
