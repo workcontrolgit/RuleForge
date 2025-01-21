@@ -28,6 +28,11 @@ namespace RuleForge.Infrastructure.RuleEngine.RuleModule.Services
             return resultList.All(a => a.IsSuccess);
         }
 
+        public async Task<List<RuleResultTree>> ExecuteWorkflowAllSuccess2(string workflowName, params object[] inputs)
+        {
+            return await ExecuteWorkflowAsync(workflowName, inputs);
+        }
+
         /// <summary>
         /// Execute Workflow Any Success
         /// </summary>

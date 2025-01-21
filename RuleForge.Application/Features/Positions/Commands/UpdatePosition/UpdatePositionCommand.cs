@@ -1,4 +1,6 @@
-﻿namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
+﻿using System.Runtime.InteropServices;
+
+namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
 {
     // Define a command class for updating a position
     public class UpdatePositionCommand : IRequest<Response<Guid>>
@@ -33,12 +35,20 @@
                 else
                 {
                     // Update the position with the new values from the command
-                    position.PositionTitle = command.PositionTitle;
-                    position.PositionDescription = command.PositionDescription;
+                    UpdatePosition(command, position);
 
                     await _repository.UpdateAsync(position); // Save the updated position to the repository
 
                     return new Response<Guid>(position.Id); // Return a response containing the ID of the updated position
+                }
+
+                void UpdatePosition(UpdatePositionCommand command, Position position)
+                {
+                    position.PositionNumber = command.PositionNumber;
+                    position.PositionTitle = command.PositionTitle;
+                    position.PositionDescription = command.PositionDescription;
+                    position.DepartmentId = command.DepartmentId;
+                    position.SalaryRangeId = command.SalaryRangeId;
                 }
             }
         }
