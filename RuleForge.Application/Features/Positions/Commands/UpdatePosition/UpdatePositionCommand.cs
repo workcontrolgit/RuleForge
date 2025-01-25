@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using MediatR;
+using RuleForge.Infrastructure.RuleEngine.RuleModule.Models;
+using RuleForge.Infrastructure.RuleEngine.RuleModule.Services;
+using System.Runtime.InteropServices;
 
 namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
 {
@@ -17,15 +20,22 @@ namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
         {
             private readonly IPositionRepositoryAsync _repository; // Repository for accessing positions
 
+            private readonly RulesService _rulesService;
+
             // Constructor to inject the repository
-            public UpdatePositionCommandHandler(IPositionRepositoryAsync positionRepository)
+            public UpdatePositionCommandHandler(IPositionRepositoryAsync positionRepository, RulesService rulesService)
             {
                 _repository = positionRepository;
+                _rulesService = rulesService;
             }
 
             // Handle method to process the update command
             public async Task<Response<Guid>> Handle(UpdatePositionCommand command, CancellationToken cancellationToken)
             {
+                dynamic[] inputs = [command];
+
+                RuleCheckModel ruleCheckModel = await _rulesService.CheckRuleAsync("PositionWorkflow", inputs);
+
                 var position = await _repository.GetByIdAsync(command.Id); // Get the position by ID
 
                 if (position == null)
