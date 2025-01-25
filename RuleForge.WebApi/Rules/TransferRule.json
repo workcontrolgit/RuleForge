@@ -27,7 +27,7 @@
         "RuleName": "Apply10PercentDiscount",
         "SuccessEvent": "10% Discount Applied",
         "ErrorMessage": "No discount applicable",
-        "Expression": "input1.TotalAmount > 100"
+        "Expression": "input1.TotalAmount < 100"
       },
       {
         "RuleName": "Apply20PercentDiscount",

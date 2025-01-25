@@ -1,4 +1,5 @@
-﻿using RuleForge.Infrastructure.RuleEngine.RuleModule.Models;
+﻿using RuleForge.Application.DTOs;
+using RuleForge.Infrastructure.RuleEngine.RuleModule.Models;
 using RuleForge.Infrastructure.RuleEngine.RuleModule.Services;
 
 namespace RuleForge.Application.Features.Positions.Commands.CreatePosition
@@ -44,9 +45,19 @@ namespace RuleForge.Application.Features.Positions.Commands.CreatePosition
         // This method is called when a new position creation command is issued.
         public async Task<Response<Guid>> Handle(CreatePositionCommand request, CancellationToken cancellationToken)
         {
-            dynamic[] inputs = [request];
+            // Create a MediatR request
+            var ruleEvaluateRequest = new RuleDataRequest
+            {
+                InputData = new { TotalAmount = 150 },
+                WorkflowName = "PositionWorkflow"
+            };
+            // Example input
+            var inputData = ruleEvaluateRequest.InputData;
+            var workflowName = ruleEvaluateRequest.WorkflowName;
 
-            RuleCheckModel ruleCheckModel = await _rulesService.CheckRuleAsync("PositionWorkflow", inputs);
+            dynamic[] inputs = { inputData, workflowName };
+
+            RuleValidation ruleCheckModel = await _rulesService.ValidateRuleAsync(workflowName, inputs);
 
             // Maps the incoming command to a Position object using the mapper.
             var position = _mapper.Map<Position>(request);

@@ -1,4 +1,6 @@
-﻿namespace RuleForge.Application.Features.Positions.Commands.CreatePosition
+﻿using MediatR;
+
+namespace RuleForge.Application.Features.Positions.Commands.CreatePosition
 {
     /// <summary>
     /// Validator for the CreatePositionCommand.

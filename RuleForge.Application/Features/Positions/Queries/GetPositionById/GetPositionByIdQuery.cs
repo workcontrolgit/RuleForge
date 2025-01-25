@@ -35,7 +35,7 @@ namespace RuleForge.Application.Features.Positions.Queries.GetPositionById
             public async Task<Response<Position>> Handle(GetPositionByIdQuery query, CancellationToken cancellationToken)
             {
                 // Create a MediatR request
-                var request = new EvaluateRulesRequest
+                var request = new RuleDataRequest
                 {
                     InputData = new { TotalAmount = 150 },
                     WorkflowName = "PositionWorkflow"
@@ -46,7 +46,7 @@ namespace RuleForge.Application.Features.Positions.Queries.GetPositionById
 
                 dynamic[] inputs = { inputData, workflowName };
 
-                RuleCheckModel ruleCheckModel = await _rulesService.CheckRuleAsync(workflowName, inputs);
+                RuleValidation ruleCheckModel = await _rulesService.ValidateRuleAsync(workflowName, inputs);
 
                 var workflowAllSuccess = await _rulesService.ExecuteWorkflowAllSuccess(workflowName, inputs);
                 var workflowAnySuccess = await _rulesService.ExecuteWorkflowAnySuccess(workflowName, inputs);

@@ -16,7 +16,7 @@ namespace RuleForge.WebApi.Controllers.v1
         {
             BankAccount account = new();
             dynamic[] inputs = [account, dto];
-            RuleCheckModel ruleCheckModel = await _rulesService.CheckRuleAsync("Transfer", inputs);
+            RuleValidation ruleCheckModel = await _rulesService.ValidateRuleAsync("Transfer", inputs);
 
             return (ruleCheckModel.IsSuccess) ? Ok() : BadRequest(ruleCheckModel.Errors);
         }

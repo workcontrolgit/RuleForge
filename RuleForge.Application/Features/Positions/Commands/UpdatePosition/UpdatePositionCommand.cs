@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using Microsoft.Extensions.Configuration;
+using RuleForge.Application.DTOs;
 using RuleForge.Infrastructure.RuleEngine.RuleModule.Models;
 using RuleForge.Infrastructure.RuleEngine.RuleModule.Services;
-using System.Runtime.InteropServices;
 
 namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
 {
@@ -19,22 +19,25 @@ namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
         public class UpdatePositionCommandHandler : IRequestHandler<UpdatePositionCommand, Response<Guid>>
         {
             private readonly IPositionRepositoryAsync _repository; // Repository for accessing positions
-
             private readonly RulesService _rulesService;
+            private readonly IConfiguration _configuration;
 
             // Constructor to inject the repository
-            public UpdatePositionCommandHandler(IPositionRepositoryAsync positionRepository, RulesService rulesService)
+            public UpdatePositionCommandHandler(IPositionRepositoryAsync positionRepository, IConfiguration configuration, RulesService rulesService)
             {
                 _repository = positionRepository;
                 _rulesService = rulesService;
+                _configuration = configuration;
             }
 
             // Handle method to process the update command
             public async Task<Response<Guid>> Handle(UpdatePositionCommand command, CancellationToken cancellationToken)
             {
-                dynamic[] inputs = [command];
-
-                RuleCheckModel ruleCheckModel = await _rulesService.CheckRuleAsync("PositionWorkflow", inputs);
+                // Usage
+                var inputData = new { TotalAmount = 150 };
+                var workflowName = _configuration.GetSection("WorkflowName").Value;
+                //.var workflowName = "PositionWorkflow";
+                var validationResult = await CheckRuleAsync(workflowName, inputData);
 
                 var position = await _repository.GetByIdAsync(command.Id); // Get the position by ID
 
@@ -51,15 +54,30 @@ namespace RuleForge.Application.Features.Positions.Commands.UpdatePosition
 
                     return new Response<Guid>(position.Id); // Return a response containing the ID of the updated position
                 }
+            }
 
-                void UpdatePosition(UpdatePositionCommand command, Position position)
+            private void UpdatePosition(UpdatePositionCommand command, Position position)
+            {
+                position.PositionNumber = command.PositionNumber;
+                position.PositionTitle = command.PositionTitle;
+                position.PositionDescription = command.PositionDescription;
+                position.DepartmentId = command.DepartmentId;
+                position.SalaryRangeId = command.SalaryRangeId;
+            }
+
+            private async Task<RuleValidation> CheckRuleAsync(string workflowName, object inputData)
+            {
+                var ruleEvaluationRequest = CreateRuleEvaluationRequest(workflowName, inputData);
+                return await _rulesService.ValidateRuleAsync(ruleEvaluationRequest.WorkflowName, new dynamic[] { ruleEvaluationRequest.InputData, ruleEvaluationRequest.WorkflowName });
+            }
+
+            private RuleDataRequest CreateRuleEvaluationRequest(string workflowName, object inputData)
+            {
+                return new RuleDataRequest
                 {
-                    position.PositionNumber = command.PositionNumber;
-                    position.PositionTitle = command.PositionTitle;
-                    position.PositionDescription = command.PositionDescription;
-                    position.DepartmentId = command.DepartmentId;
-                    position.SalaryRangeId = command.SalaryRangeId;
-                }
+                    InputData = inputData,
+                    WorkflowName = workflowName
+                };
             }
         }
     }

@@ -6,7 +6,7 @@ namespace RuleForge.Infrastructure.RuleEngine.RuleModule.Services
     {
         private readonly IRulesEngine _rulesEngine = rulesEngine;
 
-        public async Task<RuleCheckModel> CheckRuleAsync(string workflowName, dynamic[] inputs)
+        public async Task<RuleValidation> ValidateRuleAsync(string workflowName, dynamic[] inputs)
         {
             List<RuleResultTree> resultList = await _rulesEngine.ExecuteAllRulesAsync(workflowName, inputs);
 
@@ -51,7 +51,7 @@ namespace RuleForge.Infrastructure.RuleEngine.RuleModule.Services
         private ValueTask<List<RuleResultTree>> ExecuteWorkflowAsync(string workflowName, params object[] inputs) =>
             _rulesEngine.ExecuteAllRulesAsync(workflowName, inputs);
 
-        private static RuleCheckModel HandleResult(List<RuleResultTree> resultList)
+        private static RuleValidation HandleResult(List<RuleResultTree> resultList)
         {
             List<string> errors = resultList
                 .Where(result => !result.IsSuccess)
@@ -59,8 +59,8 @@ namespace RuleForge.Infrastructure.RuleEngine.RuleModule.Services
                 .ToList();
 
             return errors.Any()
-                ? RuleCheckModel.CheckedOnFailure(errors)
-                : RuleCheckModel.CheckedSuccessfully();
+                ? RuleValidation.CheckedOnFailure(errors)
+                : RuleValidation.CheckedSuccessfully();
         }
     }
 }
